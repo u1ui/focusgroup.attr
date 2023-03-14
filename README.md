@@ -1,5 +1,5 @@
 # [u1-focusgroup] - attribute
-key controllable elements
+Keyboard controllable elements
 
 ## Features
 

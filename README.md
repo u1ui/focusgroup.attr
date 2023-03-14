@@ -1,6 +1,16 @@
 # [u1-focusgroup] - attribute
 undefined
 
+## About
+
+It allows you to focus elements with arrow keys inside a container.  
+
+See also:
+
+https://open-ui.org/components/focusgroup.explainer/
+https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Focusgroup/explainer.md
+
+
 ## Ussage
 
 ```html

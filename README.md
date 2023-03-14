@@ -1,8 +1,7 @@
 # [u1-focusgroup] - attribute
-undefined
+key controllable elements
 
-
-## About
+## Features
 
 It allows you to focus elements with arrow keys inside a container.  
 
@@ -10,7 +9,6 @@ See also:
 
 https://open-ui.org/components/focusgroup.explainer/
 https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Focusgroup/explainer.md
-
 
 ## Ussage
 
@@ -37,3 +35,4 @@ https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Focusgroup/explainer
 
 - MIT License, Copyright (c) 2022 <u1> (like all repositories in this organization) <br>
 - Suggestions, ideas, finding bugs and making pull requests make us very happy. ♥
+

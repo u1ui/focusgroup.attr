@@ -42,7 +42,8 @@ document.addEventListener('keydown', e => {
 	if (!direction) return;
 
 	//const focusable = [...parent.querySelectorAll(':is(a[href], button, input, select, textarea, [contenteditable], [tabindex]:not([tabindex="-1"]))')];
-	const focusable = [...parent.querySelectorAll(':is(a[href], button, input, select, textarea, [contenteditable], [tabindex])')];
+	const selector = ':is(a[href], button, input, select, textarea, [contenteditable], [tabindex])';
+	const focusable = [...parent.querySelectorAll(selector)].filter(el => !el.disabled);
 	if (focusable.length < 2) return;
 
 	const index = focusable.indexOf(target);

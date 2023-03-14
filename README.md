@@ -1,6 +1,7 @@
 # [u1-focusgroup] - attribute
 undefined
 
+
 ## About
 
 It allows you to focus elements with arrow keys inside a container.  
@@ -17,7 +18,7 @@ https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Focusgroup/explainer
 <div u1-focusgroup>
     <button>press left</button>
     <button>or right</button>
-    <button>keys to focus</button>
+    <button>to focus the next button</button>
 </div>
 ```
 

@@ -1,21 +1,20 @@
 /* Copyright (c) 2016 Tobias Buschor https://goo.gl/gl0mbf | MIT License https://goo.gl/HgajeK */
 
-document.addEventListener('keydown', e => {
+//import {SelectorObserver} from 'https://cdn.jsdelivr.net/gh/u1ui/SelectorObserver.js@3.6.0/SelectorObserver.min.js'
+
+
+
+
+
+addEventListener('keydown', e => {
 	if (e.defaultPrevented) return;
 
 	const isVertical = (e.code === 'ArrowUp' || e.code === 'ArrowDown');
 	const isHorizontal = (e.code === 'ArrowLeft' || e.code === 'ArrowRight');
 	if (!isVertical && !isHorizontal) return;
 
-	let target = e.target;
-	let parent = target.closest('[u1-focusgroup]');
-
-	if (!parent) { // inside shadow dom
-		target = e.originalTarget;
-		parent = target.closest('[u1-focusgroup]');
-	}
-	// todo: handle slotted elements
-	if (!parent) return;
+	const {target, container} = eventTargets(e);
+	if (!container) return;
 
 	if (isHorizontal) {
 		if (target.tagName === 'INPUT' && (target.type !== 'checkbox' && target.type !== 'radio')) return;
@@ -26,7 +25,7 @@ document.addEventListener('keydown', e => {
 		if (target.tagName === 'TEXTAREA') return;
 	}
 
-	const tmp = parent.getAttribute('u1-focusgroup').split(' ');
+	const tmp = container.getAttribute('u1-focusgroup').split(' ');
 	const options = Object.fromEntries(tmp.map(o => [o, true]));
 	if (!options.horizontal && !options.vertical) {
 		options.horizontal = true;
@@ -36,36 +35,56 @@ document.addEventListener('keydown', e => {
 	if (!options.horizontal && isHorizontal) return;
 	if (!options.vertical && isVertical) return;
 
-	let direction = false;
-	if (e.code === 'ArrowLeft' || e.code === 'ArrowUp') direction = 'prev';
-	if (e.code === 'ArrowRight' || e.code === 'ArrowDown') direction = 'next';
-	if (!direction) return;
+	let direction = 0;
+	if (e.code === 'ArrowLeft' || e.code === 'ArrowUp') direction = -1;
+	if (e.code === 'ArrowRight' || e.code === 'ArrowDown') direction = 1;
+	if (direction === 0) return;
 
-	//const focusable = [...parent.querySelectorAll(':is(a[href], button, input, select, textarea, [contenteditable], [tabindex]:not([tabindex="-1"]))')];
-	const selector = ':is(a[href], button, input, select, textarea, [contenteditable], [tabindex])';
-	const focusable = [...parent.querySelectorAll(selector)].filter(el => !el.disabled);
-	if (focusable.length < 2) return;
+	const items = groupItems(container);
+	if (items.length < 2) return;
 
-	const index = focusable.indexOf(target);
-	// in the spec all other focusables will get tabindex=-1, should we do the same? https://open-ui.org/components/focusgroup.explainer/
+	const index = items.indexOf(target);
 
 	if (index === -1) {
-		console.warn('focusgroup: got a keyup event, but the target is not focusable!');
+		console.warn('should not happen, got a focusgroup-key-event, but the target is not focusable!');
 		return;
 	}
 
-	let next;
-	if (direction === 'prev') {
-		next = focusable[index - 1];
-		if (!next && options.wrap) next = focusable.at(-1);
-	}
-	if (direction === 'next') {
-		next = focusable[index + 1];
-		if (!next && options.wrap) next = focusable[0];
-	}
+	let next = items[index + direction];
+	if (!next && options.wrap) next = direction === 1 ? items.at(0) : items.at(-1);
 
 	if (!next) return;
 
 	next.focus();
 	e.preventDefault();
 });
+
+
+addEventListener('focusin', e => {
+	const {target, container} = eventTargets(e);
+	if (!container) return;
+	const remember = container.getAttribute('u1-focusgroup').split(' ').includes('remember');
+	if (!remember) return;
+	groupItems(container).forEach(el => el.setAttribute('tabindex', el === target ? '0' : '-1'));
+});
+
+
+
+function groupItems(container) {
+	const selector = ' :not(u1-focusgroup) a[href], button, input, select, textarea, [contenteditable], [tabindex]';
+	return [...container.querySelectorAll(selector)].filter(el => !el.disabled);
+}
+
+function eventTargets(event){
+	let target = event.target;
+	let container = target.closest('[u1-focusgroup]');
+	if (!container) { // inside shadow dom
+		target = event.originalTarget;
+		container = target.closest('[u1-focusgroup]');
+	}
+	// TODO? handle slotted elements
+	return {
+		target,
+		container
+	};
+}

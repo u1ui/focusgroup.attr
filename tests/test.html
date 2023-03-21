@@ -27,9 +27,15 @@
     </section>
 
     <section>
-        <h2>u1-focusgroup="wrap"</h2>
+        <h2>u1-focusgroup="wrap remember"</h2>
+        <p>
+            <strong>Wrap:</strong> If the last element has focus the next will be the first element.
+        </p>
+        <p>
+            <strong>Remember:</strong> If you come back to the group the last focused element will be focused. (The others can not be focused by tab-key.)
+        </p>
 
-        <div style="display:flex; gap:1rem" u1-focusgroup="wrap">
+        <div style="display:flex; gap:1rem" u1-focusgroup="wrap remember">
             <label>1. <input type="checkbox"></label>
             <label>2. <input type="checkbox"></label>
             <label>3. <input type="checkbox"></label>

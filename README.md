@@ -1,5 +1,5 @@
 # [u1-focusgroup] - attribute
-Keyboard controllable elements
+Focus movement by arrow keys
 
 ## Features
 
@@ -12,7 +12,7 @@ https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Focusgroup/explainer
 ## Ussage
 
 ```html
-<div u1-focusgroup>
+<div u1-focusgroup="wrap remember">
     <button>press left</button>
     <button>or right</button>
     <button>to focus the next button</button>

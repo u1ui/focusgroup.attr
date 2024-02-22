@@ -46,7 +46,6 @@ addEventListener('keydown', e => {
 
 	let next = items[index + direction];
 	if (!next && options.wrap) next = direction === 1 ? items.at(0) : items.at(-1);
-
 	if (!next) return;
 
 	next.focus();

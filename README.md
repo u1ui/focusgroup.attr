@@ -9,7 +9,7 @@ See also:
 https://open-ui.org/components/focusgroup.explainer/  
 https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Focusgroup/explainer.md
 
-## Ussage
+## Usage
 
 ```html
 <div u1-focusgroup="wrap remember">

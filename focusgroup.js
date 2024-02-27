@@ -72,7 +72,8 @@ function eventTargets(event){
 	let target = event.target;
 	let container = target.closest('[u1-focusgroup]');
 	if (!container) { // inside shadow dom
-		target = event.originalTarget;
+		target = event.originalTarget; // only for firefox?
+		if (!target) return {};
 		container = target.closest('[u1-focusgroup]');
 	}
 	// TODO? handle slotted elements

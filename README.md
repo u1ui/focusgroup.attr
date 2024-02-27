@@ -5,6 +5,12 @@ Focus movement by arrow keys
 
 It allows you to focus elements with arrow keys inside a container.  
 
+- Works inside shadow dom.
+- Use focusgroup="wrap" to focus the first element when the last element is focused and vice versa.
+- Use focusgroup="remember" to focus the last focused element when group is focused again.
+- Text-Inputs only works for up and down arrow keys.
+
+
 See also:  
 https://open-ui.org/components/focusgroup.explainer/  
 https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Focusgroup/explainer.md

@@ -65,7 +65,16 @@ addEventListener('focusin', e => {
 
 function groupItems(container) {
 	const selector = ' :not(u1-focusgroup) a[href], button, input, select, textarea, [contenteditable], [tabindex]';
-	return [...container.querySelectorAll(selector)].filter(el => !el.disabled);
+	const elements = [...container.querySelectorAll(selector)];
+
+	// handle slotted elements, beta
+	const slots = container.matches('slot') ? [container] : container.querySelectorAll('slot'); // TODO: handle slotted elements
+	slots.forEach(slot => {
+		const slotted = slot.assignedElements({flatten: true}).filter(el => el.matches(selector));
+		elements.push(...slotted);
+	});
+
+	return elements.filter(el => !el.disabled);
 }
 
 function eventTargets(event){
@@ -76,7 +85,7 @@ function eventTargets(event){
 		if (!target) return {};
 		container = target.closest('[u1-focusgroup]');
 	}
-	// TODO? handle slotted elements
+	if (!container) container = target.assignedSlot?.closest('[u1-focusgroup]'); // if slotted, ok?
 	return {
 		target,
 		container
